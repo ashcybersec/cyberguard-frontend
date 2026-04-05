@@ -1,0 +1,234 @@
+.step {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.stepTag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.75rem;
+}
+
+.stepTitle {
+  font-family: var(--font-head);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.stepDesc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--grey);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.controlHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.controlIcon {
+  font-size: 1.5rem;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+
+.input {
+  background: var(--navy-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.85rem 1rem;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.input::placeholder { color: var(--grey-dim); }
+
+.input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0,194,203,0.1);
+}
+
+.sizeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.sizeBtn {
+  background: var(--navy-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  color: var(--grey);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.sizeBtn:hover {
+  border-color: var(--cyan-dim);
+  color: var(--white);
+}
+
+.sizeBtnActive {
+  border-color: var(--cyan) !important;
+  background: rgba(0,194,203,0.08) !important;
+  color: var(--cyan) !important;
+}
+
+/* Questions */
+.questions {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.questionRow {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid rgba(0,194,203,0.08);
+  transition: background 0.15s;
+}
+
+.questionRow:first-child {
+  border-top: 1px solid rgba(0,194,203,0.08);
+}
+
+.questionNum {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--grey-dim);
+  letter-spacing: 0.05em;
+}
+
+.questionText {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--white);
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.yesno {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.yesBtn, .noBtn {
+  padding: 0.35rem 0.85rem;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--grey);
+}
+
+.yesBtn:hover { border-color: var(--green); color: var(--green); }
+.noBtn:hover  { border-color: var(--red);   color: var(--red);   }
+
+.yesBtnActive {
+  background: rgba(42,157,143,0.15) !important;
+  border-color: var(--green) !important;
+  color: var(--green) !important;
+}
+
+.noBtnActive {
+  background: rgba(230,57,70,0.15) !important;
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+
+/* Navigation */
+.navRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2.5rem;
+}
+
+.nextBtn {
+  padding: 0.85rem 2rem;
+  background: var(--cyan);
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.03em;
+}
+
+.nextBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(0,194,203,0.3);
+}
+
+.nextBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.backBtn {
+  padding: 0.85rem 1.25rem;
+  background: transparent;
+  color: var(--grey);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.backBtn:hover {
+  color: var(--white);
+  border-color: var(--grey-dim);
+}
