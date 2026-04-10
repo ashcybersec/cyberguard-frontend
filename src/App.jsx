@@ -280,7 +280,6 @@ function ResultsPage({ result, payload, onReset }) {
     </div>
   )
 }
-
 export default function App() {
   const [step, setStep]       = useState('landing')
   const [client, setClient]   = useState({ company_name: '', contact_name: '', contact_email: '', company_size: '', industry: '' })
@@ -289,6 +288,12 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState('')
   const [payload, setPayload]  = useState(null)
 
+  // Stripe success redirect
+  if (window.location.pathname === '/success') {
+    const sid = new URLSearchParams(window.location.search).get('session_id')
+    if (sid) window.location.href = `${API_BASE}/api/v1/download-pack?session_id=${sid}`
+    return <Landing onStart={() => window.location.href = '/'} />
+  }
   const controlIndex = step.startsWith('control_') ? parseInt(step.split('_')[1]) : -1
   const progressStep = step === 'client' ? 0 : step.startsWith('control_') ? controlIndex + 1 : 6
 
