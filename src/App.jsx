@@ -58,7 +58,6 @@ function ResultsPage({ result, payload, onReset }) {
       setDownloading(d => ({ ...d, pack: false }))
     }
   }
-}
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '3rem 1.5rem' }}>
