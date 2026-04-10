@@ -40,6 +40,7 @@ function ResultsPage({ result, payload, onReset }) {
   } finally {
     setDownloading(d => ({ ...d, [key]: false }))
   }
+}
 
   const buyEvidencePack = async () => {
     setDownloading(d => ({ ...d, pack: true }))
