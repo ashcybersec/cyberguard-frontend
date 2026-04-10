@@ -15,27 +15,49 @@ const RISK_COLOURS = {
   critical: { color: '#E63946', bg: 'rgba(230,57,70,0.1)',   label: 'CRITICAL RISK' },
 }
 
-function ResultsPage({ result, onReset }) {
+function ResultsPage({ result, payload, onReset }) {
   const [downloading, setDownloading] = useState({ report: false, pack: false })
   const [downloaded, setDownloaded] = useState({ report: false, pack: false })
 
   const risk = RISK_COLOURS[result.overall_risk] || RISK_COLOURS.medium
 
   const downloadFile = async (key, url, filename) => {
-    setDownloading(d => ({ ...d, [key]: true }))
+  setDownloading(d => ({ ...d, [key]: true }))
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'accept': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+    const blob = await res.blob()
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = filename
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    setDownloaded(d => ({ ...d, [key]: true }))
+  } finally {
+    setDownloading(d => ({ ...d, [key]: false }))
+  }
+
+  const buyEvidencePack = async () => {
+    setDownloading(d => ({ ...d, pack: true }))
     try {
-      const blob = await fetch(url).then(r => r.blob())
-      const a = document.createElement('a')
-      a.href = URL.createObjectURL(blob)
-      a.download = filename
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      setDownloaded(d => ({ ...d, [key]: true }))
-    } finally {
-      setDownloading(d => ({ ...d, [key]: false }))
+      const res = await fetch(`${API_BASE}/api/v1/checkout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ payload }),
+      })
+      const data = await res.json()
+      if (data.checkout_url) window.location.href = data.checkout_url
+      else throw new Error('No checkout URL')
+    } catch (e) {
+      alert('Payment setup failed: ' + e.message)
+      setDownloading(d => ({ ...d, pack: false }))
     }
   }
+}
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '3rem 1.5rem' }}>
@@ -200,7 +222,7 @@ function ResultsPage({ result, onReset }) {
               ZIP · 7 Word docs · Submit to assessor
             </div>
             <button
-              onClick={() => downloadFile('pack', `${API_BASE}/api/v1/evidence-pack`, `CyberGuard_EvidencePack_${result.client.company_name.replace(/ /g,'_')}.zip`)}
+              onClick={buyEvidencePack}
               disabled={downloading.pack}
               style={{
                 width: '100%', padding: '0.7rem',
@@ -212,7 +234,7 @@ function ResultsPage({ result, onReset }) {
                 transition: 'all 0.2s',
               }}
             >
-              {downloading.pack ? 'Generating docs...' : downloaded.pack ? '✓ Downloaded' : 'Download Evidence Pack'}
+              {downloading.pack ? 'Redirecting to payment...' : 'Buy Evidence Pack — £49'}
             </button>
           </div>
         </div>
