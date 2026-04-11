@@ -261,7 +261,7 @@ export default function ControlStep({ control, answers, onChange, onNext, onBack
         <button className={s.backBtn} onClick={onBack} type="button">← Back</button>
         <button
           className={s.nextBtn}
-          onClick={() => { window.scrollTo(0, 0); onNext(); }}
+          onClick={() => { onNext(); setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 50); }}
           disabled={!allAnswered}
           type="button"
         >
