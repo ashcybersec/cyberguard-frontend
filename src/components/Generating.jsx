@@ -83,7 +83,7 @@ export default function Generating() {
         letterSpacing: '0.1em',
         textTransform: 'uppercase',
       }}>
-        AI agent running · This may take 10–20 seconds
+        Analysing your responses · This may take 10–20 seconds
       </div>
     </div>
   )

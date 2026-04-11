@@ -292,19 +292,34 @@ export default function App() {
   if (window.location.pathname === '/success') {
     const sid = new URLSearchParams(window.location.search).get('session_id')
     if (sid) {
-      fetch(`${API_BASE}/api/v1/download-pack?session_id=${sid}`)
-        .then(r => r.blob())
-        .then(blob => {
-          const a = document.createElement("a")
-          a.href = URL.createObjectURL(blob)
-          a.download = "CyberGuard_EvidencePack.zip"
-          document.body.appendChild(a)
-          a.click()
-          document.body.removeChild(a)
-          setTimeout(() => window.location.href = "/", 2000)
-        })
+      setTimeout(() => {
+        fetch(`${API_BASE}/api/v1/download-pack?session_id=${sid}`)
+          .then(r => r.blob())
+          .then(blob => {
+            const a = document.createElement("a")
+            a.href = URL.createObjectURL(blob)
+            a.download = "CyberGuard_EvidencePack.zip"
+            document.body.appendChild(a)
+            a.click()
+            document.body.removeChild(a)
+            setTimeout(() => window.location.href = "/", 3000)
+          })
+      }, 1000)
     }
-    return <Landing onStart={() => window.location.href = '/'} />
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)', padding: '2rem' }}>
+        <div style={{ textAlign: 'center', maxWidth: 480 }}>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
+          <h1 style={{ color: 'var(--cyan)', fontSize: '1.8rem', marginBottom: '1rem' }}>Payment Successful</h1>
+          <p style={{ color: 'var(--grey)', fontSize: '1rem', marginBottom: '0.5rem' }}>Your Evidence Pack is downloading now.</p>
+          <p style={{ color: 'var(--grey)', fontSize: '0.9rem', marginBottom: '2rem' }}>If the download does not start automatically, please check your Downloads folder.</p>
+          <div style={{ width: '100%', height: 4, background: 'rgba(0,194,203,0.2)', borderRadius: 2, overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: '100%', background: 'var(--cyan)', animation: 'pulse 1.5s ease-in-out infinite' }} />
+          </div>
+          <p style={{ color: 'var(--grey)', fontSize: '0.8rem', marginTop: '1rem' }}>You will be redirected shortly...</p>
+        </div>
+      </div>
+    )
   }
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }) }, [step])
 
