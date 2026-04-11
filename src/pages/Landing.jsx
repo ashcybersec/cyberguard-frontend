@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const PILLS = ['NCSC Cyber Essentials', 'UK GDPR Article 32', '5 Controls', 'AI-Powered', 'PDF Report']
+const PILLS = ['NCSC Cyber Essentials', 'UK GDPR Article 32', 'CE v3.3', '5 Controls', 'Free PDF Report']
 
 export default function Landing({ onStart }) {
   const [visible, setVisible] = useState(false)
@@ -48,7 +48,7 @@ export default function Landing({ onStart }) {
       <p style={{ ...fade(0.5), fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--grey-dim)', marginTop: '0.85rem' }}>Takes 3–5 minutes · No account required</p>
 
       <div style={{ ...fade(0.5), display: 'flex', gap: '3rem', marginTop: '4rem', alignItems: 'center' }}>
-        {[['5', 'Controls'], ['25', 'Questions'], ['PDF', 'Report']].map(([num, label], i) => (
+        {[['5', 'CE Controls'], ['v3.3', 'NCSC Aligned'], ['Free', 'PDF Report']].map(([num, label], i) => (
           <React.Fragment key={label}>
             {i > 0 && <div style={{ width: 1, height: 36, background: 'var(--border)' }} />}
             <div style={{ textAlign: 'center' }}>
