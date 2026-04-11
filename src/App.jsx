@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Landing from './pages/Landing'
 import ClientStep from './components/ClientStep'
 import ControlStep from './components/ControlStep'
@@ -306,6 +306,8 @@ export default function App() {
     }
     return <Landing onStart={() => window.location.href = '/'} />
   }
+  useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }) }, [step])
+
   const controlIndex = step.startsWith('control_') ? parseInt(step.split('_')[1]) : -1
   const progressStep = step === 'client' ? 0 : step.startsWith('control_') ? controlIndex + 1 : 6
 
