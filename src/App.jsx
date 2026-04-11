@@ -234,7 +234,7 @@ function ResultsPage({ result, payload, onReset }) {
                 transition: 'all 0.2s',
               }}
             >
-              {downloading.pack ? 'Redirecting to payment...' : 'Buy Evidence Pack — £49'}
+              {downloading.pack ? 'Redirecting to payment...' : 'Buy Evidence Pack — £9.99'}
             </button>
           </div>
         </div>
@@ -370,7 +370,7 @@ export default function App() {
       </div>
       <div style={{ textAlign: 'center' }}>
         <div style={{ fontFamily: 'var(--font-head)', fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>Analysing your security posture</div>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--cyan)' }}>AI agent running gap analysis...</div>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--cyan)' }}>Generating your compliance report...</div>
       </div>
     </div>
   )
