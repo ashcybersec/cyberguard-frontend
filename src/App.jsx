@@ -291,7 +291,19 @@ export default function App() {
   // Stripe success redirect
   if (window.location.pathname === '/success') {
     const sid = new URLSearchParams(window.location.search).get('session_id')
-    if (sid) window.location.href = `${API_BASE}/api/v1/download-pack?session_id=${sid}`
+    if (sid) {
+      fetch(`${API_BASE}/api/v1/download-pack?session_id=${sid}`)
+        .then(r => r.blob())
+        .then(blob => {
+          const a = document.createElement("a")
+          a.href = URL.createObjectURL(blob)
+          a.download = "CyberGuard_EvidencePack.zip"
+          document.body.appendChild(a)
+          a.click()
+          document.body.removeChild(a)
+          setTimeout(() => window.location.href = "/", 2000)
+        })
+    }
     return <Landing onStart={() => window.location.href = '/'} />
   }
   const controlIndex = step.startsWith('control_') ? parseInt(step.split('_')[1]) : -1
