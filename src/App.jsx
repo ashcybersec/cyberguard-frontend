@@ -292,31 +292,30 @@ export default function App() {
   if (window.location.pathname === '/success') {
     const sid = new URLSearchParams(window.location.search).get('session_id')
     if (sid) {
-      setTimeout(() => {
-        fetch(`${API_BASE}/api/v1/download-pack?session_id=${sid}`)
-          .then(r => r.blob())
-          .then(blob => {
-            const a = document.createElement("a")
-            a.href = URL.createObjectURL(blob)
-            a.download = "CyberGuard_EvidencePack.zip"
-            document.body.appendChild(a)
-            a.click()
-            document.body.removeChild(a)
-            setTimeout(() => window.location.href = "/", 3000)
-          })
-      }, 1000)
+      fetch(`${API_BASE}/api/v1/download-pack?session_id=${sid}`)
+        .catch(e => console.log('Triggered background generation', e))
     }
     return (
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)', padding: '2rem' }}>
-        <div style={{ textAlign: 'center', maxWidth: 480 }}>
+        <div style={{ textAlign: 'center', maxWidth: 520 }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
           <h1 style={{ color: 'var(--cyan)', fontSize: '1.8rem', marginBottom: '1rem' }}>Payment Successful</h1>
-          <p style={{ color: 'var(--grey)', fontSize: '1rem', marginBottom: '0.5rem' }}>Your Evidence Pack is downloading now.</p>
-          <p style={{ color: 'var(--grey)', fontSize: '0.9rem', marginBottom: '2rem' }}>If the download does not start automatically, please check your Downloads folder.</p>
-          <div style={{ width: '100%', height: 4, background: 'rgba(0,194,203,0.2)', borderRadius: 2, overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: '100%', background: 'var(--cyan)', animation: 'pulse 1.5s ease-in-out infinite' }} />
+          <p style={{ color: '#ffffff', fontSize: '1.1rem', marginBottom: '0.5rem', fontWeight: 600 }}>Your Evidence Pack is being prepared.</p>
+          <p style={{ color: 'var(--grey)', fontSize: '1rem', marginBottom: '2rem' }}>It will be emailed to you within 5 minutes. Please check your inbox and spam folder.</p>
+          <div style={{ background: '#12121a', border: '1px solid rgba(0,194,203,0.3)', borderRadius: 8, padding: '1.5rem', marginBottom: '2rem', textAlign: 'left' }}>
+            <p style={{ color: 'var(--grey)', fontSize: '0.85rem', margin: 0 }}>📧 Your email will contain:</p>
+            <ul style={{ color: 'var(--grey)', fontSize: '0.85rem', marginTop: '0.5rem', paddingLeft: '1.2rem' }}>
+              <li>7 submission-ready Word policy documents</li>
+              <li>Payment receipt</li>
+              <li>Next steps for CE certification</li>
+            </ul>
           </div>
-          <p style={{ color: 'var(--grey)', fontSize: '0.8rem', marginTop: '1rem' }}>You will be redirected shortly...</p>
+          <button
+            onClick={() => window.location.href = '/'}
+            style={{ background: 'var(--cyan)', color: '#000', border: 'none', borderRadius: 4, padding: '0.75rem 2rem', fontWeight: 700, cursor: 'pointer', fontSize: '1rem' }}
+          >
+            ← Back to Home
+          </button>
         </div>
       </div>
     )
