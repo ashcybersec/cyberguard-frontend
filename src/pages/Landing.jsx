@@ -1,335 +1,188 @@
 import React, { useEffect, useState } from 'react'
 
-const PILLS = ['NCSC Cyber Essentials v3.3', 'UK GDPR Article 32', 'CE+ Ready', '5 Controls', 'Free PDF Report']
+const PILLS = ['NCSC CE v3.3', 'UK GDPR Article 32', 'CE+ Ready', '5 Controls', 'Free PDF Report']
 
 const STATS = [
-  { num: '5', label: 'CE Controls', sub: 'fully assessed' },
   { num: '35', label: 'Questions', sub: 'CE v3.3 aligned' },
-  { num: '£320', label: 'Cert Cost', sub: 'via IASME' },
+  { num: '5', label: 'Controls', sub: 'fully assessed' },
+  { num: '5 min', label: 'To complete', sub: 'instant results' },
 ]
 
-const TRUST_ITEMS = [
-  { icon: '🔒', text: 'Aligned to NCSC Cyber Essentials v3.3 (April 2026)' },
-  { icon: '📋', text: 'Evidence pack ready for IASME submission' },
-  { icon: '⚡', text: 'Results in under 5 minutes' },
-  { icon: '🇬🇧', text: 'Built for UK SMEs by UK cybersecurity professionals' },
+const FEATURES = [
+  { icon: '🛡', title: 'CE v3.3 Aligned', desc: 'Updated for April 2026 NCSC requirements including mandatory MFA' },
+  { icon: '📄', title: 'Free PDF Report', desc: 'Professional gap analysis report, no account required' },
+  { icon: '📦', title: 'Evidence Pack', desc: '7 submission-ready Word policy documents for £9.99' },
+  { icon: '🇬🇧', title: 'UK SME Focused', desc: 'Built specifically for UK businesses seeking CE certification' },
 ]
 
 export default function Landing({ onStart }) {
-  const [visible, setVisible] = useState(false)
-  const [hovered, setHovered] = useState(false)
+  const [vis, setVis]       = useState(false)
+  const [hovered, setHov]   = useState(false)
+  const [featHov, setFeatHov] = useState(null)
 
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 80)
-    return () => clearTimeout(t)
-  }, [])
+  useEffect(() => { const t = setTimeout(() => setVis(true), 60); return () => clearTimeout(t) }, [])
 
-  const fade = (delay = 0, y = 24) => ({
-    opacity: visible ? 1 : 0,
-    transform: visible ? 'translateY(0)' : `translateY(${y}px)`,
+  const fade = (delay = 0, x = 0, y = 20) => ({
+    opacity: vis ? 1 : 0,
+    transform: vis ? 'translate(0,0)' : `translate(${x}px,${y}px)`,
     transition: `opacity 0.7s ${delay}s cubic-bezier(0.22,1,0.36,1), transform 0.7s ${delay}s cubic-bezier(0.22,1,0.36,1)`,
   })
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '3rem 1.5rem',
-      position: 'relative',
-      overflow: 'hidden',
-    }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '4rem 1.5rem 5rem', position: 'relative', overflow: 'hidden' }}>
 
-      {/* Background grid */}
-      <div style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundImage: `
-          linear-gradient(rgba(0,194,203,0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(0,194,203,0.03) 1px, transparent 1px)
-        `,
-        backgroundSize: '48px 48px',
-        pointerEvents: 'none',
-        zIndex: 0,
-      }} />
+      {/* Decorative blobs */}
+      <div style={{ position: 'fixed', width: 700, height: 700, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,212,224,0.07) 0%, transparent 70%)', top: '-10%', left: '-10%', pointerEvents: 'none', animation: 'float 8s ease-in-out infinite' }} />
+      <div style={{ position: 'fixed', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(124,111,247,0.07) 0%, transparent 70%)', bottom: '-5%', right: '-5%', pointerEvents: 'none', animation: 'float 10s ease-in-out infinite reverse' }} />
 
-      {/* Glow orbs */}
-      <div style={{
-        position: 'fixed',
-        width: 800,
-        height: 800,
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(0,194,203,0.06) 0%, transparent 65%)',
-        top: '30%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        pointerEvents: 'none',
-        zIndex: 0,
-      }} />
-      <div style={{
-        position: 'fixed',
-        width: 400,
-        height: 400,
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(83,74,183,0.08) 0%, transparent 65%)',
-        bottom: '10%',
-        right: '10%',
-        pointerEvents: 'none',
-        zIndex: 0,
-      }} />
+      <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: 760, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
-      <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: 720, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-
-        {/* Brand badge */}
+        {/* Brand pill */}
         <div style={{
           ...fade(0),
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem',
+          display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+          background: 'linear-gradient(135deg, rgba(0,212,224,0.1), rgba(124,111,247,0.1))',
+          border: '1px solid rgba(0,212,224,0.25)',
+          borderRadius: 100, padding: '0.45rem 1.1rem 0.45rem 0.7rem',
           marginBottom: '2.5rem',
-          background: 'rgba(0,194,203,0.06)',
-          border: '1px solid rgba(0,194,203,0.2)',
-          borderRadius: 100,
-          padding: '0.4rem 1rem 0.4rem 0.6rem',
         }}>
-          <div style={{
-            width: 7,
-            height: 7,
-            borderRadius: '50%',
-            background: 'var(--cyan)',
-            boxShadow: '0 0 10px var(--cyan)',
-            animation: 'pulse 2s ease-in-out infinite',
-          }} />
-          <span style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.68rem',
-            letterSpacing: '0.25em',
-            color: 'var(--cyan)',
-            textTransform: 'uppercase',
-          }}>
-            CyberGuard Essentials
-          </span>
+          <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--cyan)', boxShadow: '0 0 12px var(--cyan)', display: 'inline-block', animation: 'pulse 2s ease-in-out infinite' }} />
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', letterSpacing: '0.2em', color: 'var(--cyan)', textTransform: 'uppercase' }}>CyberGuard Essentials</span>
         </div>
 
         {/* Headline */}
         <h1 style={{
-          ...fade(0.1),
-          fontFamily: 'var(--font-head)',
-          fontSize: 'clamp(2.6rem, 7vw, 4.8rem)',
-          fontWeight: 800,
-          lineHeight: 1.04,
-          textAlign: 'center',
-          margin: 0,
-          letterSpacing: '-0.02em',
+          ...fade(0.08),
+          fontFamily: 'var(--font-head)', fontSize: 'clamp(2.8rem, 7vw, 5rem)',
+          fontWeight: 800, lineHeight: 1.04, textAlign: 'center',
+          letterSpacing: '-0.025em', marginBottom: '1.5rem',
         }}>
           Know Your Cyber Risk
-          <br />
-          <span style={{
-            color: 'var(--cyan)',
-            position: 'relative',
-            display: 'inline-block',
-          }}>
-            In Minutes.
+          <span style={{ display: 'block', position: 'relative', width: 'fit-content', margin: '0 auto' }}>
             <span style={{
-              position: 'absolute',
-              bottom: -4,
-              left: 0,
-              right: 0,
-              height: 3,
-              background: 'linear-gradient(90deg, var(--cyan), transparent)',
-              borderRadius: 2,
-              opacity: visible ? 1 : 0,
-              transition: 'opacity 0.8s 0.6s ease',
+              background: 'linear-gradient(135deg, var(--cyan), #a78bfa)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>In Minutes.</span>
+            {/* Underline accent */}
+            <span style={{
+              position: 'absolute', bottom: -6, left: 0, right: 0, height: 3,
+              background: 'linear-gradient(90deg, var(--cyan), #a78bfa, transparent)',
+              borderRadius: 2, opacity: vis ? 1 : 0,
+              transition: 'opacity 0.6s 0.7s',
             }} />
           </span>
         </h1>
 
         {/* Subheadline */}
         <p style={{
-          ...fade(0.2),
-          fontFamily: 'var(--font-body)',
-          fontSize: '1.05rem',
-          fontWeight: 300,
-          color: 'var(--grey)',
-          textAlign: 'center',
-          maxWidth: 520,
-          marginTop: '1.5rem',
-          marginBottom: 0,
-          lineHeight: 1.75,
+          ...fade(0.15),
+          fontFamily: 'var(--font-body)', fontSize: '1.05rem', fontWeight: 300,
+          color: 'var(--grey)', textAlign: 'center', maxWidth: 540,
+          lineHeight: 1.8, marginBottom: '2rem',
         }}>
-          Professional Cyber Essentials gap analysis for UK SMEs — aligned to NCSC v3.3.
+          Professional Cyber Essentials gap analysis for UK SMEs — aligned to NCSC v3.3 (April 2026).
           Get a free compliance report and submission-ready evidence pack.
         </p>
 
         {/* Pills */}
-        <div style={{
-          ...fade(0.25),
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '0.5rem',
-          justifyContent: 'center',
-          marginTop: '2rem',
-        }}>
+        <div style={{ ...fade(0.2), display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center', marginBottom: '2.5rem' }}>
           {PILLS.map(p => (
             <span key={p} style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.65rem',
-              color: 'var(--cyan-dim)',
-              border: '1px solid rgba(0,194,203,0.15)',
-              background: 'rgba(0,194,203,0.04)',
-              padding: '0.3rem 0.75rem',
-              borderRadius: 100,
-              letterSpacing: '0.04em',
-            }}>
-              {p}
-            </span>
+              fontFamily: 'var(--font-mono)', fontSize: '0.63rem', letterSpacing: '0.04em',
+              color: 'var(--cyan-dim)', border: '1px solid rgba(0,212,224,0.18)',
+              background: 'rgba(0,212,224,0.05)', padding: '0.3rem 0.8rem', borderRadius: 100,
+            }}>{p}</span>
           ))}
         </div>
 
-        {/* CTA Button */}
-        <div style={{ ...fade(0.35), marginTop: '2.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+        {/* CTA */}
+        <div style={{ ...fade(0.25), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.8rem', marginBottom: '4rem' }}>
           <button
             onClick={onStart}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
+            onMouseEnter={() => setHov(true)}
+            onMouseLeave={() => setHov(false)}
             style={{
               padding: '1.1rem 3.5rem',
               background: hovered
-                ? 'linear-gradient(135deg, #00d4de, #00c2cb)'
-                : 'var(--cyan)',
-              color: '#080f1a',
-              fontFamily: 'var(--font-head)',
-              fontSize: '1.05rem',
-              fontWeight: 700,
-              border: 'none',
-              borderRadius: 6,
-              cursor: 'pointer',
+                ? 'linear-gradient(135deg, #00e5f0, #00c4d0)'
+                : 'linear-gradient(135deg, var(--cyan), #0099a8)',
+              color: '#080f1a', fontFamily: 'var(--font-head)', fontSize: '1.05rem',
+              fontWeight: 700, border: 'none', borderRadius: 8, cursor: 'pointer',
               letterSpacing: '0.03em',
-              transition: 'all 0.25s cubic-bezier(0.22,1,0.36,1)',
-              transform: hovered ? 'translateY(-3px) scale(1.02)' : 'translateY(0) scale(1)',
+              transition: 'all 0.3s cubic-bezier(0.22,1,0.36,1)',
+              transform: hovered ? 'translateY(-4px) scale(1.03)' : 'translateY(0) scale(1)',
               boxShadow: hovered
-                ? '0 12px 40px rgba(0,194,203,0.4), 0 0 0 1px rgba(0,194,203,0.3)'
-                : '0 4px 20px rgba(0,194,203,0.2)',
+                ? '0 16px 48px rgba(0,212,224,0.45), 0 0 0 1px rgba(0,212,224,0.4)'
+                : '0 6px 24px rgba(0,212,224,0.25)',
             }}
           >
             Start Free Assessment →
           </button>
-          <span style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.65rem',
-            color: 'var(--grey-dim)',
-            letterSpacing: '0.05em',
-          }}>
-            3–5 minutes · No account required · Free report
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.63rem', color: 'var(--grey-dim)', letterSpacing: '0.06em' }}>
+            3–5 MINUTES · NO ACCOUNT REQUIRED · 100% FREE REPORT
           </span>
         </div>
 
         {/* Stats bar */}
         <div style={{
-          ...fade(0.45),
-          display: 'flex',
-          gap: '0',
-          marginTop: '3.5rem',
-          background: 'rgba(13,27,46,0.6)',
-          border: '1px solid rgba(0,194,203,0.12)',
-          borderRadius: 10,
-          overflow: 'hidden',
-          width: '100%',
-          maxWidth: 560,
+          ...fade(0.3),
+          display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
+          width: '100%', maxWidth: 580,
+          background: 'linear-gradient(135deg, var(--bg-card), var(--bg-2))',
+          border: '1px solid var(--border-2)',
+          borderRadius: 14, overflow: 'hidden',
+          boxShadow: 'var(--shadow-card)', marginBottom: '2rem',
         }}>
           {STATS.map((s, i) => (
             <div key={s.label} style={{
-              flex: 1,
-              padding: '1.2rem',
-              textAlign: 'center',
-              borderRight: i < STATS.length - 1 ? '1px solid rgba(0,194,203,0.1)' : 'none',
+              padding: '1.4rem 1rem', textAlign: 'center',
+              borderRight: i < 2 ? '1px solid var(--border-2)' : 'none',
+              position: 'relative',
             }}>
-              <div style={{
-                fontFamily: 'var(--font-head)',
-                fontSize: '1.9rem',
-                fontWeight: 800,
-                color: 'var(--cyan)',
-                lineHeight: 1,
-              }}>
-                {s.num}
-              </div>
-              <div style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.6rem',
-                color: 'var(--grey)',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                marginTop: '0.3rem',
-              }}>
-                {s.label}
-              </div>
-              <div style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.58rem',
-                color: 'var(--grey-dim)',
-                marginTop: '0.15rem',
-              }}>
-                {s.sub}
-              </div>
+              <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: 40, height: 2, background: 'linear-gradient(90deg, transparent, var(--cyan), transparent)', opacity: 0.5 }} />
+              <div style={{ fontFamily: 'var(--font-head)', fontSize: '2rem', fontWeight: 800, background: 'linear-gradient(135deg, var(--cyan), #a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', lineHeight: 1 }}>{s.num}</div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--grey)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '0.3rem' }}>{s.label}</div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.56rem', color: 'var(--grey-dim)', marginTop: '0.15rem' }}>{s.sub}</div>
             </div>
           ))}
         </div>
 
-        {/* Trust items */}
+        {/* Feature cards */}
         <div style={{
-          ...fade(0.5),
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '0.6rem',
-          marginTop: '2rem',
-          width: '100%',
-          maxWidth: 580,
+          ...fade(0.35),
+          display: 'grid', gridTemplateColumns: '1fr 1fr',
+          gap: '0.75rem', width: '100%', marginBottom: '2.5rem',
         }}>
-          {TRUST_ITEMS.map(item => (
-            <div key={item.text} style={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '0.6rem',
-              padding: '0.65rem 0.85rem',
-              background: 'rgba(13,27,46,0.4)',
-              border: '1px solid rgba(0,194,203,0.08)',
-              borderRadius: 8,
-            }}>
-              <span style={{ fontSize: '0.9rem', flexShrink: 0, marginTop: 1 }}>{item.icon}</span>
-              <span style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: '0.78rem',
-                color: 'var(--grey)',
-                lineHeight: 1.5,
-              }}>
-                {item.text}
-              </span>
+          {FEATURES.map((f, i) => (
+            <div
+              key={f.title}
+              onMouseEnter={() => setFeatHov(i)}
+              onMouseLeave={() => setFeatHov(null)}
+              style={{
+                padding: '1.1rem 1.2rem',
+                background: featHov === i
+                  ? 'linear-gradient(135deg, rgba(0,212,224,0.08), rgba(124,111,247,0.06))'
+                  : 'rgba(22,30,46,0.8)',
+                border: `1px solid ${featHov === i ? 'rgba(0,212,224,0.25)' : 'var(--border-2)'}`,
+                borderRadius: 12, cursor: 'default',
+                transition: 'all 0.25s cubic-bezier(0.22,1,0.36,1)',
+                transform: featHov === i ? 'translateY(-2px)' : 'translateY(0)',
+                boxShadow: featHov === i ? '0 8px 32px rgba(0,0,0,0.2)' : 'none',
+              }}
+            >
+              <div style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{f.icon}</div>
+              <div style={{ fontFamily: 'var(--font-head)', fontSize: '0.9rem', fontWeight: 700, color: 'var(--white)', marginBottom: '0.3rem' }}>{f.title}</div>
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.78rem', color: 'var(--grey)', lineHeight: 1.55 }}>{f.desc}</div>
             </div>
           ))}
         </div>
 
-        {/* Footer note */}
-        <p style={{
-          ...fade(0.55),
-          fontFamily: 'var(--font-mono)',
-          fontSize: '0.62rem',
-          color: 'var(--grey-dim)',
-          marginTop: '2.5rem',
-          textAlign: 'center',
-          lineHeight: 1.7,
-        }}>
-          Powered by Corvaxis Ltd · ceready.co.uk · Aligned to NCSC Cyber Essentials v3.3
+        {/* Footer */}
+        <p style={{ ...fade(0.4), fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--grey-dim)', textAlign: 'center', lineHeight: 1.8 }}>
+          Corvaxis Ltd · ceready.co.uk · Aligned to NCSC Cyber Essentials v3.3 (April 2026)
         </p>
       </div>
-
-      <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
-        }
-      `}</style>
     </div>
   )
 }
